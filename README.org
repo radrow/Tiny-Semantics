@@ -1,0 +1,53 @@
+* Tiny-Semantics
+
+Tiny is a minimalistic programming language featuring evaluation of simple expressions like ~+~, ~-~, ~*~ on integral numbers along with some basic logic expressions to handle ~if~ statements.
+
+#+BEGIN_SRC haskell
+data Expr = LitInt Integer 
+          | Var VarName
+          | Plus Expr Expr
+          | Minus Expr Expr
+          | Mult Expr Expr
+
+data BExpr = LitBool Bool
+           | Con BExpr BExpr 
+           | Eq Expr Expr 
+           | Lt Expr Expr 
+           | Neg BExpr
+
+data Instr = Skip
+           | Assign VarName Expr
+           | Semicolon Instr Instr 
+           | If BExpr Instr Instr 
+           | While BExpr Instr 
+           | Begin Decl Instr  -- new feature!
+           | Call ProcName VarName  -- new feature!
+#+END_SRC
+
+This version of Tiny is extended with variable declarations and recursive procedures. 
+
+#+BEGIN_SRC haskell
+data Decl = VarDecl VarName Expr | ProcDecl ProcName VarName Instr | EmptyDecl | ConsDecl Decl Decl
+#+END_SRC
+
+All procedures take single argument by name reference and return nothing – the only way to gather it's result is to assign new value to the argument, for instance evaluating program:
+
+#+BEGIN_SRC haskell
+sample :: Instr
+sample = Begin (ConsDecl
+                (VarDecl "x" (LitInt 0))
+                (ProcDecl "p" "y"
+                 (Semicolon
+                  (Assign "y" (LitInt 3))
+                  (If (Eq (Var "x") (LitInt 3))
+                   (Assign "y" (LitInt 4))
+                   Skip
+                 )
+                )
+               ))
+         (Call "p" "x")
+#+END_SRC
+
+Will return state where ~x~ is bound to value ~3~.
+
+The semantics of this language is written in continuational style as a task for MIMUW course.
