@@ -8,9 +8,9 @@ import Data.Map
 import Data.Function
 
 
--- |I am using Map for any "mutable" functions. Map will be noted as long arrow.
+-- |I am using Map for representing all "mutable" functions. Map will be noted as long arrow.
 -- Application of map is done by (!) operator, eg. `mapfunc ! argument`.
--- Modification of map is done by `insert` function, eq. `insert key value map`.
+-- Modification of map is done by `insert` function, eg. `insert key value map`.
 -- Union of two maps resolves collisions by taking bindings from first map,
 -- eg `union (insert 1 21 empty) (insert 1 37 empty) ! 1 == 21`
 type (-->) = Map
