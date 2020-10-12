@@ -2,7 +2,7 @@
 
 module Tiny where
 
--- Author: Radosław Rowicki 386088
+-- Author: Radosław Rowicki
 
 import Data.Map
 import Data.Function
