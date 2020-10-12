@@ -1,6 +1,6 @@
 {-#LANGUAGE TypeOperators#-}
 
-module Task2 where
+module Tiny where
 
 -- Author: Radosław Rowicki 386088
 
